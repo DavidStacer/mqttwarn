@@ -739,6 +739,8 @@ def builtin_transform_data(topic, payload):
     tdata['_dtiso']     = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ") # 2014-02-17T10:38:43.910691Z
     tdata['_dthhmm']    = dt.strftime('%H:%M')      # 10:16
     tdata['_dthhmmss']  = dt.strftime('%H:%M:%S')   # hhmmss=10:16:21
+    tdata['_dtYYmm']    = dt.strftime('%Y-%m')      # 2016-04
+    tdata['_dtYYmmdd']  = dt.strftime('%Y-%m-%d')   # 2016-04-15
 
     return tdata
 
@@ -925,7 +927,7 @@ def processor(worker_id=None):
             st = Struct(**item)
             notified = False
             try:
-                # fire the plugin in a separate thread and kill it if it doesn't return in 10s 
+                # fire the plugin in a separate thread and kill it if it doesn't return in 10s
                 module = service_plugins[service]['module']
                 notified = timeout(module.plugin, (srv, st))
             except Exception, e:
